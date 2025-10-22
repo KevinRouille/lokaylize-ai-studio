@@ -1,0 +1,412 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Lokaylize | AI-Powered Marketing Localization</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --brand-blue: #192A56;
+            --brand-red: #d62828;
+            --light-gray: #f8f9fa;
+            --medium-gray: #dee2e6;
+            --dark-gray: #495057;
+            --text-color: #212529;
+            --card-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--light-gray);
+            color: var(--text-color);
+            margin: 0;
+            padding: 2rem 1rem;
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        #root {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+
+        header {
+            text-align: center;
+            position: relative;
+        }
+        
+        .clear-session-btn {
+            position: absolute;
+            top: 0;
+            right: 0;
+            background-color: var(--light-gray);
+            color: var(--dark-gray);
+            border: 1px solid var(--medium-gray);
+            padding: 0.5rem 1rem;
+            font-size: 0.85rem;
+            font-weight: 500;
+        }
+
+        .clear-session-btn:hover:not(:disabled) {
+            background-color: #e9ecef;
+            border-color: #ced4da;
+            color: var(--brand-blue);
+            transform: none;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .logo svg {
+            height: 50px;
+        }
+
+        .tagline {
+            color: var(--dark-gray);
+            font-size: 1.1rem;
+            font-weight: 500;
+        }
+
+        main {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: var(--card-shadow);
+            overflow: hidden;
+        }
+
+        .tabs {
+            display: flex;
+            background-color: #f1f3f5;
+            flex-wrap: wrap;
+        }
+
+        .tab {
+            padding: 1rem 1.5rem;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 1rem;
+            border: none;
+            background: none;
+            color: var(--dark-gray);
+            position: relative;
+            transition: color 0.2s ease-in-out;
+        }
+
+        .tab:hover {
+            color: var(--brand-blue);
+        }
+
+        .tab.active {
+            color: var(--brand-blue);
+        }
+
+        .tab.active::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background-color: var(--brand-red);
+        }
+
+        .tab-content {
+            padding: 2rem;
+        }
+
+        .controls {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+            align-items: flex-end;
+        }
+        
+        .control-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            min-width: 200px;
+        }
+
+        .input-options {
+            display: flex;
+            gap: 1.5rem;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            width: 100%;
+        }
+
+        .or-divider {
+            font-weight: 600;
+            color: var(--medium-gray);
+            display: flex;
+            align-items: center;
+        }
+
+        .file-name {
+            font-size: 0.85rem;
+            color: var(--dark-gray);
+            margin-top: 0.5rem;
+            font-style: italic;
+        }
+
+        label {
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        select, textarea, input[type="file"] {
+            padding: 0.75rem;
+            border-radius: 6px;
+            border: 1px solid var(--medium-gray);
+            font-size: 1rem;
+            font-family: 'Inter', sans-serif;
+        }
+        
+        textarea {
+            min-height: 150px;
+            resize: vertical;
+        }
+        
+        textarea:disabled, input:disabled {
+            background-color: #f1f3f5;
+            cursor: not-allowed;
+        }
+
+        button {
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 6px;
+            background-color: var(--brand-blue);
+            color: white;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.2s ease-in-out, transform 0.1s ease;
+            height: fit-content;
+        }
+
+        button:hover:not(:disabled) {
+            background-color: #142142;
+            transform: translateY(-1px);
+        }
+
+        button:disabled {
+            background-color: var(--medium-gray);
+            cursor: not-allowed;
+        }
+        
+        .loader {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem;
+            font-weight: 500;
+            margin-top: 1.5rem;
+            background-color: #f1f3f5;
+            border-radius: 6px;
+        }
+        
+        .spinner {
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(0,0,0,0.1);
+            border-left-color: var(--brand-blue);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+        
+        .progress-bar-container {
+            width: 100%;
+            background-color: var(--medium-gray);
+            border-radius: 4px;
+            height: 8px;
+            margin-top: 1rem;
+            overflow: hidden;
+        }
+        
+        .progress-bar {
+            width: 0%;
+            height: 100%;
+            background-color: var(--brand-blue);
+            transition: width 0.2s ease-in-out;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        
+        .error-message {
+            color: var(--brand-red);
+            font-weight: 500;
+            margin-top: 1rem;
+            text-align: center;
+        }
+
+        .results {
+            margin-top: 2rem;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+        }
+
+        .result-panel {
+            border: 1px solid var(--medium-gray);
+            border-radius: 8px;
+            padding: 1.5rem;
+            background-color: #fcfdff;
+        }
+
+        .result-panel h3 {
+            margin-top: 0;
+            border-bottom: 2px solid var(--light-gray);
+            padding-bottom: 0.75rem;
+        }
+        
+        .result-panel img, .result-panel video {
+            max-width: 100%;
+            border-radius: 4px;
+            margin-bottom: 1rem;
+        }
+        
+        .demo-case {
+            margin-bottom: 2rem;
+            padding-bottom: 2rem;
+            border-bottom: 1px solid var(--medium-gray);
+        }
+        .demo-case:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+        }
+        
+        .history-section {
+            margin-top: 3rem;
+            border-top: 1px solid var(--medium-gray);
+            padding-top: 2rem;
+        }
+        
+        .history-section h3 {
+            margin-top: 0;
+            color: var(--brand-blue);
+        }
+
+        .history-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 1rem;
+        }
+        
+        .history-item {
+            border: 1px solid var(--medium-gray);
+            border-radius: 8px;
+            padding: 1rem;
+            cursor: pointer;
+            transition: box-shadow 0.2s ease, border-color 0.2s ease;
+            background-color: #fff;
+        }
+        
+        .history-item:hover {
+            border-color: var(--brand-blue);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+        }
+
+        .history-item p {
+            margin: 0 0 0.5rem 0;
+            font-weight: 600;
+        }
+        .history-item span {
+            font-size: 0.9rem;
+            color: var(--dark-gray);
+            display: block;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        
+        .history-thumbnails {
+            display: flex;
+            gap: 0.5rem;
+            margin-top: 0.75rem;
+        }
+        
+        .history-thumbnail {
+            width: 40px;
+            height: 40px;
+            object-fit: cover;
+            border-radius: 4px;
+            border: 1px solid var(--medium-gray);
+        }
+
+
+        h2 {
+            color: var(--brand-blue);
+        }
+        
+        strong {
+            font-weight: 600;
+        }
+        
+        /* Markdown-like styling */
+        .markdown h4 {
+            margin-top: 1.5em;
+            margin-bottom: 0.5em;
+            color: var(--brand-blue);
+        }
+        .markdown ul {
+            padding-left: 20px;
+        }
+        .markdown li {
+            margin-bottom: 0.5em;
+        }
+
+        @media (max-width: 900px) {
+            .input-options {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            .or-divider {
+                margin: 0.5rem 0;
+            }
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding: 1rem 0.5rem;
+            }
+            .controls {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            .results {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+<script type="importmap">
+{
+  "imports": {
+    "@google/genai": "https://aistudiocdn.com/@google/genai@^1.25.0"
+  }
+}
+</script>
+</head>
+<body>
+    <div id="root"></div>
+    <script type="module" src="index.tsx"></script>
+</body>
+</html>
